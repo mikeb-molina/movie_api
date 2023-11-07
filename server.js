@@ -1,10 +1,10 @@
-const http = require('http'),
-     fs = require('fs'),
-    url = require('url');
+const http = require('http')
+const fs = require('fs')
+const url = require('url');
 
 http.createServer((request, response) =>{
     let addr = request.url,
-        q = new URL(addr, request.url),
+        q = new URL(addr, 'http://' + request.headers.host),
         filePath = '';
 
     fs.appendFile( 'log.txt', 'URL:' +addr +'\nTimestamp: ' + new Date() + '\n\n', (err) =>{
@@ -16,7 +16,7 @@ http.createServer((request, response) =>{
     });
 
     if (q.pathname.includes('documentation')){
-        filePath = (__dirname + '/documentation.html');
+        filePath = __dirname + '/documentation.html';
     } else {
         filePath = 'index.html';
     }
@@ -26,7 +26,7 @@ http.createServer((request, response) =>{
             throw err;
         }
 
-        response.writeHead(200, {'Content-Type' : 'text/html'});
+        response.writeHead(200, {'Content-Type' : 'text/plain'});
         response.write(data);
         response.end();
 
