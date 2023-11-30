@@ -1,17 +1,29 @@
+const bodyParser = require('body-parser');
 const express = require('express'),
 fs = require('fs'),
 morgan = require('morgan'),
-path = require('path');
+path = require('path'),
+uuid = require('uuid');
+
 
 const app = express();
+
+app.use(bodyParser.json());
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags:'a'});
 
 let topTenMovies = [
     {
         Title: 'The Lord of the Rings: The Felloship of the Ring',
-        Director: 'Peter Jackson' 
-
+        Description: 'Several Hobbits along with their companions set out on a quest to destroy the One ring.',
+        Genre: {
+            Name: 'Fantasy',
+            Description: 'Is a genre of fiction that takes place in a world that follows different rules than our own.',
+        },
+        Director: {
+            Name: 'Peter Jackson',
+            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went  on to direct a number of very successful film with no formal training.',
+        }
     },
     {
         Title: 'The Lord of the Rings: The Two Towers',
