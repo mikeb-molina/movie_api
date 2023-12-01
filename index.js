@@ -15,14 +15,14 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{fl
 let topTenMovies = [
     {
         Title: 'The Lord of the Rings: The Felloship of the Ring',
-        Description: 'Several Hobbits along with their companions set out on a quest to destroy the One ring.',
+        Description: 'Several Hobbits along with their companions set out on a quest to destroy the One ring of Sauron.',
         Genre: {
             Name: 'Fantasy',
             Description: 'Is a genre of fiction that takes place in a world that follows different rules than our own.',
         },
         Director: {
             Name: 'Peter Jackson',
-            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went  on to direct a number of very successful film with no formal training.',
+            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went on to direct a number of very successful film with no formal training.',
         }
     },
     {
@@ -34,7 +34,7 @@ let topTenMovies = [
         },
         Director: {
             Name: 'Peter Jackson',
-            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went  on to direct a number of very successful film with no formal training.',
+            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went on to direct a number of very successful film with no formal training.',
         }
     },
     {
@@ -46,15 +46,15 @@ let topTenMovies = [
         },
         Director: {
             Name: 'Peter Jakcson',
-            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went  on to direct a number of very successful film with no formal training.',
+            Bio: 'Peter Jackson was born in New Zealand on October 31, 1961. As a child he enjoyed creating short films and then went on to direct a number of very successful film with no formal training.',
         },
     },
     {
         Title: 'Saving Private Ryan',
-        Description: 'During World War Two, a squad of soldiers is ordered to locate Pvt. James Ryan and bring him home after his three brothers were killed in action.',
+        Description: 'During World War Two, a squad of soldiers is sent to locate Pvt. James Ryan and bring him home after his three brothers were killed in action.',
         Genre: {
             Name: 'Thriller',
-            Description: 'Thriller is an intense gernre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
+            Description: 'Thriller is an intense genre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
         },
         Director: {
             Name: 'Steven Spielberg',
@@ -66,7 +66,7 @@ let topTenMovies = [
         Description: 'A team of scientist and astonauts is sent through a wormhole to another solar sytem to find habitable planets for all of Humanity.',
         Genre: {
             Name: 'Thriller',
-            Description: 'Thriller is an intense gernre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
+            Description: 'Thriller is an intense genre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
         },
         Director: {
             Name:'Christopher Nolan',
@@ -75,10 +75,10 @@ let topTenMovies = [
     },
     {
         Title: 'Django: Unchained',
-        Description: 'Django is a slave who is freed by a bounty hunter who then teaches Django his trade and then helps track down his wife in order to save her from her fate.',
+        Description: 'Django is a slave who is freed by a bounty hunter who then teaches Django his trade and helps track down his wife in order to save her from her fate.',
         Genre: {
             Name: 'Thriller',
-            Description: 'Thriller is an intense gernre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
+            Description: 'Thriller is an intense genre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
         },
         Director: {
             Name: 'Quentin Tarantino',
@@ -90,7 +90,7 @@ let topTenMovies = [
         Description: 'This film follows the story of two cops who lead opposite lives while undercover for their respective orginazations.',
         Genre: {
             Name: 'Drama',
-            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure type.',
+            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure genre.',
         },
         Director: {
             Name:'Martin Scorsese',
@@ -102,7 +102,7 @@ let topTenMovies = [
         Description: 'Batman/s Most famous villian, the Joker, runs amok among Gotham pushing Batman to go to great lengths to stop him and protect the people of Gotham.',
         Genre: {
             Name: 'Thriller',
-            Description: 'Thriller is an intense gernre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
+            Description: 'Thriller is an intense genre that leaves the audience on the edge of their seat in anticipation of what will happen next.',
         },
         Director: {
             Name: 'Christopher Nolan',
@@ -114,7 +114,7 @@ let topTenMovies = [
         Description: 'A man travels to Jerusalem during the Crusades in the hopes of finding forgiveness for his crimes. While fighting in Jerusalem he ends up meeting his king and his enemy and falling in love.',
         Genre: {
             Name: 'Drama',
-            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure type.',
+            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure genre.',
         },
         Director: {
             Name: 'Ridley Scott',
@@ -123,14 +123,14 @@ let topTenMovies = [
     },
     {
         Title: 'Shawshank Redemption',
-        Description: 'After being accused of murdering his wife a man is send to Shawshank Prison where he forms a friednship with another inmate until he eventually breaks out and reclaims his freedom.',
+        Description: 'After being accused of murdering his wife a man is sent to Shawshank Prison where he forms a friednship with another inmate until he eventually breaks out and reclaims his freedom.',
         Genre: {
             Name: 'Drama',
-            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure type.',
+            Description: 'This genre is rich with storytelling and dialog but often lacks the violence and explosions of a thriller or adventure genre.',
         },
         Director: {
             Name: 'Frank Darabont',
-            Bio: 'Frank Darabont was born in refugee camp on January 28, 1959 but moved to the United States while still a small child. he was inspired by George Lucas and pursued filmaking after seeing one of his early films.'
+            Bio: 'Frank Darabont was born in refugee camp on January 28, 1959 but moved to the United States while still a small child. He was inspired by George Lucas and pursued filmaking after seeing one of his early films.'
         },
     }
 ]
