@@ -151,7 +151,7 @@ let movies = [
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(express.static('public'));
 
-// CREATE
+// CREATE, allow user to register
 app.post('/users', (req, res) =>{
     const newUser = req.body;
     if (newUser.name){
@@ -163,7 +163,7 @@ app.post('/users', (req, res) =>{
     }
 });
 
-//CREATE
+//CREATE, allow user to add movie to their list
 app.post('/users/:id/:movieTitle', (req, res) =>{
     const { id, movieTitle } = req.params
    
@@ -178,7 +178,7 @@ app.post('/users/:id/:movieTitle', (req, res) =>{
 });
 
 
-//DELETE
+//DELETE, allow user to remove movie from their list
 app.delete('/users/:id/:movieTitle', (req, res) =>{
     const { id, movieTitle } = req.params
    
@@ -192,7 +192,7 @@ app.delete('/users/:id/:movieTitle', (req, res) =>{
     }
 });
 
-//DELTE
+//DELTE, allow user to deregister
 app.delete('/users/:id', (req, res) =>{
     const { id } = req.params
    
@@ -206,7 +206,7 @@ app.delete('/users/:id', (req, res) =>{
     }
 });
 
-//UPDATE    
+//UPDATE, allow user to update username
 app.put('/users/:id', (req, res) =>{
     const { id } = req.params
     const updatedUser= req.body
@@ -223,12 +223,12 @@ app.put('/users/:id', (req, res) =>{
 
 
 
-//READ
+//READ, return a list of all movies
 app.get('/movies', (req, res)=> {
     res.status(200).json(movies);
 });
 
-//READ
+//READ, return a single movie by title
 app.get('/movies/:title', (req, res)=> {
     const { title } = req.params;
     const movie = movies.find(movie => movie.Title === title);
@@ -240,7 +240,7 @@ app.get('/movies/:title', (req, res)=> {
     }
 });
 
-//READ
+//READ, return data about genre by name
 app.get('/movies/genre/:genreName', (req, res)=> {
     const { genreName } = req.params;
     const genre = movies.find(movie => movie.Genre.Name === genreName).Genre;
@@ -253,7 +253,7 @@ app.get('/movies/genre/:genreName', (req, res)=> {
 });
 
 
-//READ
+//READ, return data about director by name
 app.get('/movies/directors/:directorName', (req, res)=> {
     const { directorName } = req.params;
     const director = movies.find(movie => movie.Director.Name === directorName).Director;

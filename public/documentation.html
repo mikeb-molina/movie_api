@@ -3,13 +3,94 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
         <title>Movie API</title>
     </head>
     <body>
         <div class="container" id="title">
-            <h1> My List of Movies!</h1>
+            <h1> My List of Movies!
+            
+            </h1>
             <p>The purpose of this API is to recieve information on Movies, Directors, and genres in order to learn more about movies I have watched or am interested in.</p>
-            <p>nferuoipwnerfo</p>
+        </div>
+
+        <div class="container">
+            <table id="exaple" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="w-20">Request</th>
+                            <th class="w-15">URL</th>
+                            <th class="w-15">HTTP Method</th>
+                            <th class="w-25">Request Body Data Format</th>
+                            <th class="w-25">Response Body Data Format</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> Get a List of ALL movies</td>
+                            <td>/movies</td>
+                            <td>GET</td>
+                            <td> None</td>
+                            <td>A JSON object holding an array with all movies</td>
+                        </tr>
+                        <tr>
+                            <td>Get data about a single movie by title</td>
+                            <td>/movies/:title</td>
+                            <td>GET</td>
+                            <td>None</td>
+                            <td>A JSON object holding data about a single movie, including a description, the genre and the director</td>
+                        </tr>
+                        <tr>
+                            <td>Get data about a genre by name</td>
+                            <td>/movies/:genre/:genreName</td>
+                            <td>GET</td>
+                            <td>None</td>
+                            <td>A JSON object holding data about a genre including the name and a description.</td>
+                        </tr>
+                        <tr>
+                            <td>Get data about a director by name</td>
+                            <td>movies/:directors/directorName</td>
+                            <td>GET</td>
+                            <td>None</td>
+                            <td>A JSON object holding data about a single director including their name and a short biography</td>
+                        </tr>
+                        <tr>
+                            <td>Register a new user</td>
+                            <td>/users</td>
+                            <td>POST</td>
+                            <td>A JSON object holding user data</td>
+                            <td>A JSON object holding user data including ID</td>
+                        </tr>
+                        <tr>
+                            <td>Update username</td>
+                            <td>/users/:id</td>
+                            <td>PUT</td>
+                            <td>A JSON obect holding user data</td>
+                            <td>A JSON object holding user data and ID</td>
+                        </tr>
+                        <tr>
+                            <td>Add movie to user's favorite movies</td>
+                            <td>/users/:id/:movieTitle</td>
+                            <td>POST</td>
+                            <td>None</td>
+                            <td>A Text message indicating success or failure of adding movie to users favorites</td>
+                        </tr>
+                        <tr>
+                            <td>Remove a movie from user's favorite movies</td>
+                            <td>/users/:id/:movieTitle</td>
+                            <td>DELETE</td>
+                            <td>None</td>
+                            <td>A Text message indicating success or failure of removing movie from users favorites</td>
+                        </tr>
+                        <tr>
+                            <td>Delete user registration</td>
+                            <td>/users/:id</td>
+                            <td>DELETE</td>
+                            <td>None</td>
+                            <td>A Text message indicating success or failure or deleteing user</td>
+                        </tr>
+                    </tbody>
+            </table>
         </div>
         </body>
 </html>
