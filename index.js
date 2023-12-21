@@ -4,12 +4,19 @@ fs = require('fs'),
 morgan = require('morgan'),
 path = require('path'),
 uuid = require('uuid');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies= Models.Movie;
+const Users = Models.User;
+mongoose.connect('mongodb://localhost:27017/movieFlixDB', {useNewUrlParser: true, userUnifiedTopology: true});
+
 
 
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use(express.urlencoded({extended: true}));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags:'a'});
 
 let users = [
