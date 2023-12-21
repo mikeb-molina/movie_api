@@ -83,7 +83,7 @@ let movies = [
         },
         Director: {
             Name:'Christopher Nolan',
-            Bio: 'Chistopher Nolan was born July 30, 1970 and soon began making short films with his fathers camera. His movies are often thrilling and intense with an emphasis on in depth storytelling.',
+            Bio: 'Chistopher Nolan was born July 30, 1970 and soon began making short films with his fathers camera. His movies are often dark and gritty with an emphasis on in depth storytelling.',
         },
     },
     {
