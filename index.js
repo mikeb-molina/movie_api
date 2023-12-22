@@ -9,7 +9,10 @@ const Models = require('./models.js');
 
 const Movies= Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/movieFlixDB', {useNewUrlParser: true, userUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/test', {
+    useNewUrlParser: true, 
+    userUnifiedTopology: true
+});
 
 
 
@@ -158,30 +161,67 @@ let movies = [
 app.use(morgan('combined', {stream: accessLogStream}));
 app.use(express.static('public'));
 
-// CREATE, allow user to register
-app.post('/users', (req, res) =>{
-    const newUser = req.body;
-    if (newUser.name){
-        newUser.id = uuid.v4();
-        users.push(newUser);
-        res.status(201).json(newUser)
-    }else{
-        res.status(400).send('users need names');
-    }
+// CREATE, add a user
+/* json format
+{
+    ID: Integer,
+    Username: String,
+    Password: String,
+    Email: String,
+    Birthday: Date
+}*/
+app.post('/users', async (rec, res) =>{
+    await Users.findOne({Username: req.body.Username})
+    .then((user) =>{
+        if (user){
+        return res.status(400).send(req.body.Username + 'already exists');
+        } else {
+            Users
+            .create({
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            })
+            .then((user) =>{res.status(201).json(user) })
+            .catch((error)=>{
+                console.error(error);
+                res.status(500).send('Error' + error);
+            })
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error' + error);
+    });
+});
+
+// Get all users
+app.get('/users', async (req, res) => {
+    await Users.find()
+    .then((users) => {
+        res.status(201).json(users);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error' + err);
+    });
 });
 
 //CREATE, allow user to add movie to their list
-app.post('/users/:id/:movieTitle', (req, res) =>{
-    const { id, movieTitle } = req.params
-   
-    let user = users.find(user => user.id == id );
-
-    if (user) {
-        user.favoriteMovies.push(movieTitle);
-        res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
-    }else{
-        res.status(400).send('no such user')
-    }
+app.post('/users/:Username/movies/:MovieID', async (req, res) =>{
+    await Users.findOneAndUpdate({ Username: req.params.Usernmae},
+        {
+            $push: {FavoriteMovies: req.params.MovieID}
+        },
+        {new: true})
+        .then((updateUser)=>{
+            res.json(updateUser);
+    })
+    .catch((err) =>{
+        console.error(err);
+        res.status(500).send('Error:' + err);
+    });
 });
 
 
@@ -199,77 +239,90 @@ app.delete('/users/:id/:movieTitle', (req, res) =>{
     }
 });
 
-//DELTE, allow user to deregister
-app.delete('/users/:id', (req, res) =>{
-    const { id } = req.params
-   
-    let user = users.find(user => user.id == id );
-
-    if (user) {
-        users = users.filter(user => user.id != id);
-        res.status(200).send(`user ${id} has been deleted`);
-    }else{
-        res.status(400).send('no such user')
-    }
+//DELTE, Delete a user by Username
+app.delete('/users/:Username', async (req, res) =>{
+    await Users.findOneAndRemove({Username: req.params.Username})
+        .then((user) =>{
+            if(!user) {
+                res.status(400).send(req.params.Username + ' was deleted');
+            }
+        })
+        .catch((err) =>{
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
 });
 
-//UPDATE, allow user to update username
-app.put('/users/:id', (req, res) =>{
-    const { id } = req.params
-    const updatedUser= req.body
-   
-    let user = users.find(user => user.id == id );
 
-    if (user) {
-        user.name = updatedUser.name;
-        res.status(200).json(user);
-    }else{
-        res.status(400).send('no such user')
-    }
+//UPDATE, allow user to update username
+app.put('/users/:Username', async (req, res) =>{
+    await Users.findOneAndUpdate({Username: req.params.Username},
+        {$set:
+            {
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            }
+        },
+        {new: true})
+        .then((updateUser) => {
+            res.json(updateUser);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' +err);
+        })
 });
 
 
 
 //READ, return a list of all movies
-app.get('/movies', (req, res)=> {
-    res.status(200).json(movies);
+app.get('/movies/', async (req, res)=> {
+    await Movies.find()
+    .then((movie) =>{
+        res.status(201).json(movie);
+    })
+    .catch((err) =>{
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //READ, return a single movie by title
-app.get('/movies/:title', (req, res)=> {
-    const { title } = req.params;
-    const movie = movies.find(movie => movie.Title === title);
-
-    if (movie) {
-        res.status(200).json(movie);
-    }else{
-        res.status(400).send('no such movie')
-    }
+app.get('/movies/:Title', async (req, res)=> {
+    await Movies.findOne({Ttitle: req.params.Title})
+    .then((movie) =>{
+    res.json(movie);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' +err);
+    });
 });
 
 //READ, return data about genre by name
-app.get('/movies/genre/:genreName', (req, res)=> {
-    const { genreName } = req.params;
-    const genre = movies.find(movie => movie.Genre.Name === genreName).Genre;
-
-    if (genre) {
-        res.status(200).json(genre);
-    }else{
-        res.status(400).send('no such genre')
-    }
+app.get('/movies/genres/:genreName', async (req, res)=> {
+    await Movies.findOne({'Genre.Name': req.params.genreName})
+    .then((movies) => {
+        res.json(movies);
+    })
+    .catch((err) =>{
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
-
 //READ, return data about director by name
-app.get('/movies/directors/:directorName', (req, res)=> {
-    const { directorName } = req.params;
-    const director = movies.find(movie => movie.Director.Name === directorName).Director;
-
-    if (director) {
-        res.status(200).json(director);
-    }else{
-        res.status(400).send('no such director')
-    }
+app.get('/movies/directors/:directorName', async (req, res)=> {
+   await Movies.findOne({'Director.Name': req.params.directorName})
+   .then((movies) =>{
+   res.json(movies);
+    })
+    .catch((err) =>{
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.get('/', (req, res) =>{
