@@ -21,6 +21,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags:'a'});
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 let users = [
     {
@@ -261,7 +264,12 @@ app.delete('/users/:Username', async (req, res) =>{
 
 
 //UPDATE, allow user to update username
-app.put('/users/:Username', async (req, res) =>{
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) =>{
+    //Condition to check added here
+    if(req.user.Username !== req.params.Username) {
+        return res.status(400).send('Permission denied');
+    }
+    //Condition Ends
     await Users.findOneAndUpdate({Username: req.params.Username},
         {$set:
             {
@@ -284,7 +292,7 @@ app.put('/users/:Username', async (req, res) =>{
 
 
 //READ, return a list of all movies
-app.get('/movies/', async (req, res)=> {
+app.get('/movies/', passport.authenticate('jwt', {session:false}), async (req, res)=> {
     await Movies.find()
     .then((movie) =>{
         res.status(201).json(movie);
