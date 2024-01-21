@@ -318,7 +318,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
 
 //UPDATE, allow user to update username
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) =>{    
-//Condition to check added here
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    //Condition to check added here
     if(req.user.Username !== req.params.Username) {
         return res.status(400).send('Permission denied');
     }
