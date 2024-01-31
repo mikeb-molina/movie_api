@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags:'a'});
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http:/localhost:1234'];
 app.use(cors({
     origin: (origin, callback) => {
         if(!origin) return callback(null, true);
