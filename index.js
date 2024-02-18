@@ -346,7 +346,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), asyn
 
 
 //READ, return a list of all movies
-app.get('/movies/', async (req, res)=> {
+app.get('/movies/', passport.authenticate('jwt', {session:false}), async (req, res)=> {
     await Movies.find()
     .then((movie) =>{
         res.status(201).json(movie);
