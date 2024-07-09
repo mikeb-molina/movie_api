@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags:'a'});
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://mikes-movie-flix-5278ac249606.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:4200/', 'https://mikes-movie-flix-5278ac249606.herokuapp.com/'];
 app.use(cors());
     
 let auth = require('./auth')(app);
