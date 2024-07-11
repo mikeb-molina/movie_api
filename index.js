@@ -134,7 +134,7 @@ app.delete('/users/:Username/movies/:MovieID',  async (req, res) =>{
 
 
 //DELTE, Delete a user by Username
-app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) =>{
+app.delete('/users/:Username', async (req, res) =>{
     await Users.findOneAndDelete({Username: req.params.Username})
         .then((user) =>{
             if(!user) {
@@ -151,8 +151,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
 
 
 //UPDATE, allow user to update username
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) =>{    
-    let hashedPassword = Users.hashPassword(req.body.Password);
+app.put('/users/:Username', async (req, res) =>{    
+    
     await Users.findOneAndUpdate({Username: req.params.Username},
         {$set:
             {
