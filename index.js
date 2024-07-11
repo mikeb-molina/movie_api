@@ -98,7 +98,6 @@ app.get('/users/:Username', passport.authenticate('jwt', {session:false}), async
 
 //CREATE, allow user to add movie to their list
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), async (req, res) =>{
-    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOneAndUpdate({ Username: req.params.Username},
         {
             $push: {FavoriteMovies: req.params.MovieID}
