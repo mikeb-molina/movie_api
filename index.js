@@ -115,7 +115,7 @@ app.post('/users/:Username/movies/:MovieID',  async (req, res) =>{
 
 
 //DELETE, allow user to remove movie from their list
-app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}),  async (req, res) =>{
+app.delete('/users/:Username/movies/:MovieID',  async (req, res) =>{
 
     await Users.findOneAndUpdate({ Username: req.params.Username},
         {
