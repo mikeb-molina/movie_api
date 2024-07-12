@@ -85,7 +85,7 @@ app.get('/users', passport.authenticate('jwt', {session: false}), async (req, re
 });
 
 //Get single user by Username
-app.get('/users/:Username', passport.authenticate('jwt', {session:false}), async (req, res)=> {
+app.get('/users/:Username', async (req, res)=> {
     await Users.findOne({Username: req.params.Username})
     .then((user) =>{
     res.json(user);
