@@ -72,7 +72,9 @@ app.post('/users',
     });
 });
 
-// Get all users
+ /**Make the api call for the Get All Users Endpoint
+   * @return 401 status is token is false, returns array of users if token is true
+   */
 app.get('/users', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Users.find()
     .then((users) => {
@@ -84,7 +86,10 @@ app.get('/users', passport.authenticate('jwt', {session: false}), async (req, re
     });
 });
 
-//Get single user by Username
+/**Make the api call for the Get User Endpoint
+   * @param {string} Username Username
+   * @returns 401 status is token is false, 200 status and user profile
+   */
 app.get('/users/:Username', async (req, res)=> {
     await Users.findOne({Username: req.params.Username})
     .then((user) =>{
@@ -96,7 +101,11 @@ app.get('/users/:Username', async (req, res)=> {
     });
 });
 
-//CREATE, allow user to add movie to their list
+/**Make the api call for the Add Movie to Favorites Endpoint
+   * @param {string} Username Username
+   * @param {string} movie Movie's Title
+   * @return 400 status if token is false, 200 status if add succesfful and movie added to favorite movie array
+   */
 app.post('/users/:Username/movies/:MovieID',  async (req, res) =>{
     
     await Users.findOneAndUpdate({ Username: req.params.Username},
@@ -114,7 +123,11 @@ app.post('/users/:Username/movies/:MovieID',  async (req, res) =>{
 });
 
 
-//DELETE, allow user to remove movie from their list
+/**Make the api call for the Delete Movie From Favorites Endpoint
+   * @param {string} Username Username
+   * @param {string} movie Movie's Title
+   * @return 400 status if token false, 200 status and movie removed from favorite movie array
+   */
 app.delete('/users/:Username/movies/:MovieID',  async (req, res) =>{
 
     await Users.findOneAndUpdate({ Username: req.params.Username},
@@ -133,7 +146,10 @@ app.delete('/users/:Username/movies/:MovieID',  async (req, res) =>{
 
 
 
-//DELTE, Delete a user by Username
+/**Make the api call for the Delete User Endpoint
+   * @param {string} Username Username
+   * @return status 400 if token is false, 200 status and user deleted, taken to welcome page
+   */
 app.delete('/users/:Username', async (req, res) =>{
     await Users.findOneAndDelete({Username: req.params.Username})
         .then((user) =>{
@@ -150,7 +166,10 @@ app.delete('/users/:Username', async (req, res) =>{
 });
 
 
-//UPDATE, allow user to update username
+/**Make the api call for the Edit User Endpoint
+   * @param {string} Username Username
+   * @return 400 status if token is false, 200 status and user details updated
+   */
 app.put('/users/:Username', async (req, res) =>{    
     
     await Users.findOneAndUpdate({Username: req.params.Username},
@@ -174,7 +193,9 @@ app.put('/users/:Username', async (req, res) =>{
 
 
 
-//READ, return a list of all movies
+/**Make the api call for the Get All Movies Endpoint
+   * @return 401 status is token is false, returns array of movies if token is true
+   */
 app.get('/movies/', async (req, res)=> {
     await Movies.find()
     .then((movie) =>{
@@ -186,7 +207,10 @@ app.get('/movies/', async (req, res)=> {
     });
 });
 
-//READ, return a single movie by title
+/**Make the api call for the Get One Movie Endpoint
+     * @param {string} title Movie's Title
+     * @return 401 status is token is false, 200 status and movie object if true
+     */
 app.get('/movies/:Title', passport.authenticate('jwt', {session:false}), async (req, res)=> {
     await Movies.findOne({Title: req.params.Title})
     .then((movie) =>{
@@ -199,7 +223,10 @@ app.get('/movies/:Title', passport.authenticate('jwt', {session:false}), async (
 });
 
 
-//READ, return data about genre by name
+/**Make the api call for the Get Genre Endpoint
+   * @param {string} genreName Name of Genre
+   * @return 401 status is token is false, 200 status and Genre object
+   */
 app.get('/movies/genres/:genreName', passport.authenticate('jwt', {session:false}),  async (req, res)=> {
     await Movies.find({'Genre.Name': req.params.genreName})
     .then((movies) => {
@@ -211,7 +238,10 @@ app.get('/movies/genres/:genreName', passport.authenticate('jwt', {session:false
     });
 });
 
-//READ, return data about director by name
+/**Make the api call for the Get Director Endpoint
+   * @param {string} directorName Director's Name
+   * @return 401 status is token is false, 200 status and Director object. If no Director, 400 satus
+   */
 app.get('/movies/directors/:directorName', passport.authenticate('jwt', {session:false}), async (req, res)=> {
    await Movies.find({'Director.Name': req.params.directorName})
    .then((movies) =>{
